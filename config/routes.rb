@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+
+  root :to => 'index#index'
+
+  resources :index
+
+  resources :toyotas, :except => [:new, :edit, :create, :update, :destroy] do
+    resources :toyota_models
+  end
+
+  resources :subarus, :except => [:new, :edit, :create, :update, :destroy]  do
+    resources :subaru_models
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331001157) do
+ActiveRecord::Schema.define(version: 20150331012736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "subaru_accessories", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "price"
+    t.integer  "parts_cost"
+    t.integer  "labor"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "subaru_model_id"
+  end
+
+  add_index "subaru_accessories", ["subaru_model_id"], name: "index_subaru_accessories_on_subaru_model_id", using: :btree
 
   create_table "subaru_models", force: :cascade do |t|
     t.string   "name"
@@ -32,6 +45,19 @@ ActiveRecord::Schema.define(version: 20150331001157) do
     t.datetime "updated_at"
   end
 
+  create_table "toyota_accessories", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "price"
+    t.integer  "parts_cost"
+    t.integer  "labor"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "toyota_model_id"
+  end
+
+  add_index "toyota_accessories", ["toyota_model_id"], name: "index_toyota_accessories_on_toyota_model_id", using: :btree
+
   create_table "toyota_models", force: :cascade do |t|
     t.string   "name"
     t.string   "year"
@@ -48,6 +74,8 @@ ActiveRecord::Schema.define(version: 20150331001157) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "subaru_accessories", "subaru_models"
   add_foreign_key "subaru_models", "subarus"
+  add_foreign_key "toyota_accessories", "toyota_models"
   add_foreign_key "toyota_models", "toyotas"
 end
